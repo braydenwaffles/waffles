@@ -8,16 +8,18 @@ public class Pokemon {
     // public boolean evo;
     public int health;
     private boolean isPlayerPokemon;
-
+    
+    //constructor
     public Pokemon(String name, String type, int energy, boolean isPlayerPokemon) {
         this.name = name;
         this.type = type;
         this.energy = energy;
-        // this.evo = evo;
+        // this.evo = evo; evolution add on for later
         this.health = 60;
         this.isPlayerPokemon = isPlayerPokemon;
     }
-
+    
+    //attack method
     public int useAttack(String name, int energy, Scanner scan, Random random) {
         int damageOutput = 0;
         if (isPlayerPokemon == true) { //player pokemon attack
@@ -77,7 +79,7 @@ public class Pokemon {
             } else {
                 if (name.equals("Charmander")) {
                     int rivalAttackChoice = random.nextInt(2) + 1;
-                    System.out.println("Debug: " + rivalAttackChoice);
+                    //System.out.println("Debug: " + rivalAttackChoice);
                     if (rivalAttackChoice == 1) {
                         System.out.println("Your rival used Ember!");
                         damageOutput = 0;
@@ -91,7 +93,7 @@ public class Pokemon {
                     }
                 } else if (name.equals("Squirtle")) {
                     int rivalAttackChoice = random.nextInt(2) + 1;
-                    System.out.println("Debug: " + rivalAttackChoice);
+                    //System.out.println("Debug: " + rivalAttackChoice);
                     if (rivalAttackChoice == 1) {
                         System.out.println("Your rival used Water gun!");
                         damageOutput = 0;
@@ -105,7 +107,7 @@ public class Pokemon {
                     }
                 } else if (name.equals("Bulbasaur")) {
                     int rivalAttackChoice = random.nextInt(2) + 1;
-                    System.out.println("Debug: " + rivalAttackChoice);
+                    //System.out.println("Debug: " + rivalAttackChoice);
                     if (rivalAttackChoice == 1) {
                         System.out.println("Your rival used Vine whip!");
                         damageOutput = 0;
@@ -125,9 +127,5 @@ public class Pokemon {
         return damageOutput;
     }
     
-    public int useItem() {
-        //ADD ITEM CODE
-        return 0;
-    }
     
 }

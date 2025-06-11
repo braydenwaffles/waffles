@@ -38,11 +38,20 @@ public class Main {
         }
 
         System.out.println("Great choice! \nIt's now time for your first battle against your rival!");
-        //battle phase
+        //battle phase loop
+        
+        int turnCount = 1;
+        
         while (playerPokemon.health > 0 && rivalPokemon.health > 0) {
+
+            //turn
+            System.out.println("Turn " + turnCount);
+
+            //health
             System.out.println("Your " + playerPokemon.name + " has " + playerPokemon.health + " health");
             System.out.println("Your rival's " + rivalPokemon.name + " has " + rivalPokemon.health + " health");
 
+            //energy
             System.out.println("Your pokemon has " + playerPokemon.energy + " energy");
 
             System.out.println("What would you like to do? \n 1. Attach an energy \n 2. Attack \n 3. Use an item");
@@ -56,7 +65,7 @@ public class Main {
                 damage = playerPokemon.useAttack(playerPokemon.name, playerPokemon.energy, scan, random);
                 rivalPokemon.health -= damage;
             } else if (battleChoice == 3) {
-                //ADD ITEM CODE
+                //System.out.println("What item would you like to use? \n 1. Potion (single use) \n ");
                 System.out.println("You used an item!");
             } else {
                 System.out.println("Not an option!");
@@ -75,8 +84,11 @@ public class Main {
                 //ADD ITEM CODE
                 System.out.println("Your rival used an item!");
             } else {
+                //failsafe but should never happen
                 System.out.println("Your rival didn't do anything!");
             }
+
+            turnCount += 1;
 
         }
 
