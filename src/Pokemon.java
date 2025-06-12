@@ -10,12 +10,12 @@ public class Pokemon {
     private boolean isPlayerPokemon;
     
     //constructor
-    public Pokemon(String name, String type, int energy, boolean isPlayerPokemon) {
+    public Pokemon(String name, String type, int energy, int health, boolean isPlayerPokemon) {
         this.name = name;
         this.type = type;
         this.energy = energy;
         // this.evo = evo; evolution add on for later
-        this.health = 60;
+        this.health = health;
         this.isPlayerPokemon = isPlayerPokemon;
     }
     
@@ -28,7 +28,7 @@ public class Pokemon {
             } else {
                 if (name.equals("Charmander")) {
                     System.out.println("Which attack would you like to choose?");
-                    System.out.println("1. Ember (20 dmg) \n2. Slash (30 dmg)");
+                    System.out.println("1. Ember (20 dmg) \n2. Slash (30 dmg)"); //make attacks cost energy in the future
                     int attackChoice = scan.nextInt();
                     if (attackChoice == 1) {
                         System.out.println("You used Ember!");
@@ -75,7 +75,7 @@ public class Pokemon {
             }
         } else { //rival pokemon attack
             if (energy < 1) {
-                System.out.println("Rival does not have enough energy to attack!");
+                System.out.println("Your rival tried to attack but does not have enough energy!");
             } else {
                 if (name.equals("Charmander")) {
                     int rivalAttackChoice = random.nextInt(2) + 1;
