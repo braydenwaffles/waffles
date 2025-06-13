@@ -10,7 +10,7 @@ public class Main {
         //must declare
         Pokemon playerPokemon = null;
         Pokemon rivalPokemon = null;
-
+            
 
         //picking a pokemon
         while (hasPokemon == false) {
@@ -23,7 +23,7 @@ public class Main {
                 System.out.println("You chose Charmander!");
                 hasPokemon = true;
             } else if (beginningChoice == 2) {
-                playerPokemon = new Pokemon("Squirtle", "Water", 0, 60, true);
+                playerPokemon = new Squirtle(0, 60, true);
                 rivalPokemon = new Pokemon("Charmander", "Fire", 0, 60, false);
                 System.out.println("You chose Squirtle!");
                 hasPokemon = true;
