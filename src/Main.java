@@ -37,6 +37,9 @@ public class Main {
             } 
         }
 
+        int playerMaxHealth = playerPokemon.health;
+        int rivalMaxHealth = rivalPokemon.health;
+
         //creating items
         Item playerItemPotion = new Item("Potion", true);
         Item playerItemFlute = new Item("Pokeflute", true);
@@ -71,22 +74,30 @@ public class Main {
                 damage = playerPokemon.useAttack(playerPokemon.name, playerPokemon.energy, scan, random);
                 rivalPokemon.health -= damage;
             } else if (battleChoice == 3) {
-                System.out.println("Which item would you like to use?");
-                System.out.println("1. Potion (Heals 20HP) \n2. Pokeflute (Makes opponent fall asleep for one turn!)");
-                int itemChoice = scan.nextInt(); 
-                if (itemChoice == 1) {
-                    System.out.println("You used a potion!");
-                    double modifier = 0;
-                    modifier = playerItemPotion.useItem(scan, random);
-                    playerPokemon.health += modifier;
-                    System.out.println("Your " + playerPokemon.name + " has " + playerPokemon.health + " health");
-                } else {
-                    System.out.println("You used the Pokeflute!");
-                    double modifier = 0;
-                    modifier = playerItemFlute.useItem(scan, random);
-                    //add disrupt code to here and item
+                boolean itemUsed = false;
+                while (!itemUsed) {
+                    System.out.println("Which item would you like to use?");
+                    System.out.println("1. Potion (Heals 20HP) \n2. Pokeflute (Makes opponent fall asleep for one turn!)");
+                    int itemChoice = scan.nextInt(); 
+
+                    if (itemChoice == 1) {
+                        if (playerPokemon.health >= playerMaxHealth) {
+                            System.out.println("You're already at max health!");
+                            continue; // Show item menu again
+                        }
+                        System.out.println("You used a potion!");
+                        double modifier = playerItemPotion.useItem(scan, random);
+                        playerPokemon.health += modifier;
+                        System.out.println("Your " + playerPokemon.name + " has " + playerPokemon.health + " health");
+                        itemUsed = true;
+                    } else if (itemChoice == 2) {
+                        System.out.println("You used a Pokeflute!");
+                        // apply pokeflute effect
+                        itemUsed = true;
+                    } else {
+                        System.out.println("Invalid item choice.");
+                    }
                 }
-                
             } else {
                 System.out.println("Not an option!");
             }
@@ -103,19 +114,28 @@ public class Main {
                 damage = rivalPokemon.useAttack(rivalPokemon.name, rivalPokemon.energy, scan, random);
                 playerPokemon.health -= damage;
             } else if (rivalChoice == 3) { //item
-                int rivalItemChoice = random.nextInt(2) + 1;
-                if (rivalItemChoice == 1) {
-                    System.out.println("Rival used a potion!");
-                    double modifier = 0;
-                    modifier = rivalItemPotion.useItem(scan, random);
-                    rivalPokemon.health += modifier;
-                    System.out.println("Your rival's " + rivalPokemon.name + " has " + rivalPokemon.health + " health");
-                } else {
-                    System.out.println("Rival used the Pokeflute!");
-                    double modifier = 0;
-                    modifier = rivalItemFlute.useItem(scan, random);
-                    //add disrupt code to here and item
+                boolean itemUsed = false;
+                while (!itemUsed) {
+                    int rivalItemChoice = random.nextInt(2) + 1;
+                    if (rivalItemChoice == 1) {
+                        if (rivalPokemon.health >= rivalMaxHealth) {
+                            continue;
+                        }
+                        //System.out.println("Rival used a potion!");
+                        double modifier = 0;
+                        modifier = rivalItemPotion.useItem(scan, random);
+                        rivalPokemon.health += modifier;
+                        System.out.println("Your rival's " + rivalPokemon.name + " has " + rivalPokemon.health + " health");
+                        itemUsed = true;
+                    } else {
+                        //System.out.println("Rival used the Pokeflute!");
+                        double modifier = 0;
+                        modifier = rivalItemFlute.useItem(scan, random);
+                        //add disrupt code to here and item
+                        itemUsed = true;
                 }
+                }
+                
             } else {
                 //failsafe but should never happen
                 System.out.println("Your rival didn't do anything!");
