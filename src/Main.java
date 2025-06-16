@@ -18,18 +18,18 @@ public class Main {
             int beginningChoice = scan.nextInt();
 
             if (beginningChoice == 1) {
-                playerPokemon = new Pokemon("Charmander", "Fire", 0, 60, true);
-                rivalPokemon = new Pokemon("Bulbasaur", "Grass", 0, 60, false);
+                playerPokemon = new Charmander(true, 60);
+                rivalPokemon = new Bulbasaur(false, 60);
                 System.out.println("You chose Charmander!");
                 hasPokemon = true;
             } else if (beginningChoice == 2) {
-                playerPokemon = new Squirtle(0, 60, true);
-                rivalPokemon = new Pokemon("Charmander", "Fire", 0, 60, false);
+                playerPokemon = new Squirtle(true, 60);
+                rivalPokemon = new Charmander(false, 60);
                 System.out.println("You chose Squirtle!");
                 hasPokemon = true;
             } else if (beginningChoice == 3) {
-                playerPokemon = new Pokemon("Bulbasaur", "Grass", 0, 60, true);
-                rivalPokemon = new Pokemon("Squirtle", "Water", 0, 60, false);
+                playerPokemon = new Bulbasaur(true, 60);
+                rivalPokemon = new Squirtle(false, 60);
                 System.out.println("You chose Bulbasaur!");
                 hasPokemon = true;
             } else {
@@ -57,11 +57,12 @@ public class Main {
             System.out.println("Turn " + turnCount);
 
             //health
-            System.out.println("Your " + playerPokemon.name + " has " + playerPokemon.health + " health");
-            System.out.println("Your rival's " + rivalPokemon.name + " has " + rivalPokemon.health + " health");
+            System.out.println("Your " + playerPokemon.getName() + " has " + playerPokemon.health + " health");
+            System.out.println("Your rival's " + rivalPokemon.getName() + " has " + rivalPokemon.health + " health");
 
             //energy
             System.out.println("Your pokemon has " + playerPokemon.energy + " energy");
+            System.out.println("Debug" + rivalPokemon.energy);
 
             System.out.println("What would you like to do? \n 1. Attach an energy \n 2. Attack \n 3. Use an item");
             int battleChoice = scan.nextInt();
@@ -71,7 +72,7 @@ public class Main {
                 System.out.println("You attatched an energy!");
             } else if (battleChoice == 2) {
                 int damage = 0;
-                damage = playerPokemon.useAttack(playerPokemon.name, playerPokemon.energy, scan, random);
+                damage = playerPokemon.useAttack(playerPokemon.energy, true, scan, random);
                 rivalPokemon.health -= damage;
             } else if (battleChoice == 3) {
                 boolean itemUsed = false;
@@ -88,7 +89,7 @@ public class Main {
                         System.out.println("You used a potion!");
                         double modifier = playerItemPotion.useItem(scan, random);
                         playerPokemon.health += modifier;
-                        System.out.println("Your " + playerPokemon.name + " has " + playerPokemon.health + " health");
+                        System.out.println("Your " + playerPokemon.getName() + " has " + playerPokemon.health + " health");
                         itemUsed = true;
                     } else if (itemChoice == 2) {
                         System.out.println("You used a Pokeflute!");
@@ -111,7 +112,7 @@ public class Main {
                 System.out.println("Your rival attatched an energy!");
             } else if (rivalChoice == 2) { //attack
                 int damage = 0;
-                damage = rivalPokemon.useAttack(rivalPokemon.name, rivalPokemon.energy, scan, random);
+                damage = rivalPokemon.useAttack(rivalPokemon.energy, false, scan, random);
                 playerPokemon.health -= damage;
             } else if (rivalChoice == 3) { //item
                 boolean itemUsed = false;
@@ -125,7 +126,7 @@ public class Main {
                         double modifier = 0;
                         modifier = rivalItemPotion.useItem(scan, random);
                         rivalPokemon.health += modifier;
-                        System.out.println("Your rival's " + rivalPokemon.name + " has " + rivalPokemon.health + " health");
+                        System.out.println("Your rival's " + rivalPokemon.getName() + " has " + rivalPokemon.health + " health");
                         itemUsed = true;
                     } else {
                         //System.out.println("Rival used the Pokeflute!");
@@ -147,10 +148,10 @@ public class Main {
 
         // end of battle
         if (rivalPokemon.health <= 0) {
-            System.out.println("Your rival's " + rivalPokemon.name + " fainted!"); 
+            System.out.println("Your rival's " + rivalPokemon.getName() + " fainted!"); 
             System.out.println("You defeated your rival!");
         } else if (playerPokemon.health <= 0) {
-            System.out.println("Your " + playerPokemon.name + " fainted!"); 
+            System.out.println("Your " + playerPokemon.getName() + " fainted!"); 
             System.out.println("Your rival defeated you!");
         }
 

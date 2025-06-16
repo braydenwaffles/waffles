@@ -2,17 +2,24 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Squirtle extends Pokemon {
-    public Squirtle(boolean isPlayerPokemon){
-        super("Squirtle", isPlayerPokemon);
+
+    //protected String name = "Squirtle";
+    String name = "Squirtle";
+
+    //constructor
+    public Squirtle(boolean isPlayerPokemon, int health){
+        super(isPlayerPokemon, health);
         super.type = "Water";
     }
 
-    @Overide
-    public int useAttack(int energy, Scanner scan){
+    @Override
+    public int useAttack(int energy, boolean isPlayerPokemon, Scanner scan, Random random){
         int damageOutput = 0;
         if (isPlayerPokemon == true){ //player pokemon attack
             if (energy < 1) {
                 System.out.println("You don't have enough energy to attack!");
+                damageOutput = 0;
+                return damageOutput;
             } else{
                 System.out.println("Which attack would you like to choose?");
                 System.out.println("1. Water Gun (20 dmg) \n2. Tail whip (30 dmg)");
@@ -32,6 +39,8 @@ public class Squirtle extends Pokemon {
         }else{//rival pokemon attack
             if (energy < 1) {
                 System.out.println("Your rival tried to attack but does not have enough energy!");
+                damageOutput = 0;
+                return damageOutput;
             } else {
                 int rivalAttackChoice = random.nextInt(2) + 1;
                 //System.out.println("Debug: " + rivalAttackChoice);
@@ -48,5 +57,10 @@ public class Squirtle extends Pokemon {
                 }
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

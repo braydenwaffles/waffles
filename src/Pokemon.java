@@ -1,36 +1,35 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class Pokemon {
-    private String name;
-    private String type;
+public abstract class Pokemon {
+    //public String name;
+    public String type;
     public int energy;
     // public boolean evo;
     public int health;
-    private boolean isPlayerPokemon;
+    public boolean isPlayerPokemon;
     
     //constructor
-    public abstract Pokemon(String name, boolean isPlayerPokemon){
-        this.name = name;
+    public Pokemon(boolean isPlayerPokemon, int health) {
         this.isPlayerPokemon = isPlayerPokemon;
         this.energy = 0;
-        this.health = 60;
-        
+        this.health = health;      
         // this.evo = evo; evolution add on for later
-        this.energy = energy;
-        this.health = health;
     }
 
-    //getter for name
-    public String getName(){
-        return name;
-    }
+    //abstract method for the subclass to override
+    public abstract int useAttack(int energy, boolean isPlayerPokemon, Scanner scan, Random random);
+
 
     //getter for name
+    public abstract String getName();
+
+    //getter for type
     public String getType(){
-        return name;
+        return type;
     }
-
+    
+    //setter for energy
     public void setEnergy(int new_energy){
         energy = new_energy;
     }
