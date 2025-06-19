@@ -4,10 +4,10 @@ import java.util.Random;
 public abstract class Pokemon {
     //public String name;
     public String type;
-    public int energy;
+    private int energy;
     // public boolean evo;
-    public int health;
-    public boolean isPlayerPokemon;
+    private int health;
+    public final boolean isPlayerPokemon;
     
     //constructor
     public Pokemon(boolean isPlayerPokemon, int health) {
@@ -21,16 +21,50 @@ public abstract class Pokemon {
     public abstract int useAttack(int energy, boolean isPlayerPokemon, Scanner scan, Random random);
 
 
-    //getter for name
+    //abstract getter for name because the subclass tells it's own name
     public abstract String getName();
+
 
     //getter for type
     public String getType(){
-        return type;
+        return this.type;
+    }
+
+    //getter for energy
+    public int getEnergy() {
+        return this.energy;
+    }
+
+    //getter for health
+    public int getHealth() {
+        return this.health;
+    }
+
+    /*
+    //setter for health ???
+    public void setHealth(int newHealth) {
+        this.health = newHealth;
     }
     
-    //setter for energy
-    public void setEnergy(int new_energy){
-        energy = new_energy;
+    //setter for energy ???
+    public void setEnergy(int newEnergy){
+        this.energy = newEnergy;
     }
+    */
+
+    //energy add
+    public void addEnergy(int addedEnergy) {
+        this.energy += addedEnergy;
+    }
+    
+
+    public void modifyHealth(boolean damage, int modifier) {
+        if (damage == false) {
+            this.health += modifier;
+        } else {
+            this.health -= modifier;
+        }
+    }
+
+
 }

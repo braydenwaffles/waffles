@@ -14,8 +14,8 @@ public class Item {
         this.isPlayerItem = isPlayerItem;
     }
 
-    public double useItem (Scanner scan, Random random) {
-        double modifiedOutput = 0;
+    public int useItem (Scanner scan, Random random) {
+        int modifiedOutput = 0;
         if (isPlayerItem == true) { //player item useage
             //int itemChoice = scan.nextInt();
             if (itemName.equals("Potion")) {
@@ -40,7 +40,7 @@ public class Item {
             } else {
                 System.out.println("Rival used the pokeflute!");
                 modifiedOutput = 0;
-                modifiedOutput +=  1.11;
+                modifiedOutput +=  20;
                 return modifiedOutput;
             }
         }

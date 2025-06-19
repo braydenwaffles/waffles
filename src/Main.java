@@ -37,43 +37,44 @@ public class Main {
             } 
         }
 
-        int playerMaxHealth = playerPokemon.health;
-        int rivalMaxHealth = rivalPokemon.health;
+        int playerMaxHealth = playerPokemon.getHealth();
+        int rivalMaxHealth = rivalPokemon.getHealth();
 
         //creating items
         Item playerItemPotion = new Item("Potion", true);
-        Item playerItemFlute = new Item("Pokeflute", true);
+        //Item playerItemFlute = new Item("Pokeflute", true);
         Item rivalItemPotion = new Item("Potion", false);
-        Item rivalItemFlute = new Item("Pokeflute", false);
+        //Item rivalItemFlute = new Item("Pokeflute", false);
 
         System.out.println("Great choice! \nIt's now time for your first battle against your rival!");
         //battle phase loop
         
         int turnCount = 1;
         
-        while (playerPokemon.health > 0 && rivalPokemon.health > 0) {
+        //player logic
+        while (playerPokemon.getHealth() > 0 && rivalPokemon.getHealth() > 0) {
 
             //turn
             System.out.println("Turn " + turnCount);
 
             //health
-            System.out.println("Your " + playerPokemon.getName() + " has " + playerPokemon.health + " health");
-            System.out.println("Your rival's " + rivalPokemon.getName() + " has " + rivalPokemon.health + " health");
+            System.out.println("Your " + playerPokemon.getName() + " has " + playerPokemon.getHealth() + " health");
+            System.out.println("Your rival's " + rivalPokemon.getName() + " has " + rivalPokemon.getHealth() + " health");
 
             //energy
-            System.out.println("Your pokemon has " + playerPokemon.energy + " energy");
-            System.out.println("Debug" + rivalPokemon.energy);
+            System.out.println("Your pokemon has " + playerPokemon.getEnergy() + " energy");
+            System.out.println("Debug" + rivalPokemon.getEnergy());
 
             System.out.println("What would you like to do? \n 1. Attach an energy \n 2. Attack \n 3. Use an item");
             int battleChoice = scan.nextInt();
 
             if (battleChoice == 1) {
-                playerPokemon.energy += 1;
+                playerPokemon.addEnergy(1);
                 System.out.println("You attatched an energy!");
             } else if (battleChoice == 2) {
                 int damage = 0;
-                damage = playerPokemon.useAttack(playerPokemon.energy, true, scan, random);
-                rivalPokemon.health -= damage;
+                damage = playerPokemon.useAttack(playerPokemon.getEnergy(), true, scan, random);
+                rivalPokemon.modifyHealth(true, damage);
             } else if (battleChoice == 3) {
                 boolean itemUsed = false;
                 while (!itemUsed) {
@@ -82,14 +83,14 @@ public class Main {
                     int itemChoice = scan.nextInt(); 
 
                     if (itemChoice == 1) {
-                        if (playerPokemon.health >= playerMaxHealth) {
+                        if (playerPokemon.getHealth() >= playerMaxHealth) {
                             System.out.println("You're already at max health!");
                             continue; // Show item menu again
                         }
                         System.out.println("You used a potion!");
-                        double modifier = playerItemPotion.useItem(scan, random);
-                        playerPokemon.health += modifier;
-                        System.out.println("Your " + playerPokemon.getName() + " has " + playerPokemon.health + " health");
+                        int heal = playerItemPotion.useItem(scan, random);
+                        playerPokemon.modifyHealth(false, heal);
+                        System.out.println("Your " + playerPokemon.getName() + " has " + playerPokemon.getHealth() + " health");
                         itemUsed = true;
                     } else if (itemChoice == 2) {
                         System.out.println("You used a Pokeflute!");
@@ -108,30 +109,29 @@ public class Main {
             int rivalChoice = random.nextInt(3) + 1;
 
             if (rivalChoice == 1) { //energy
-                rivalPokemon.energy += 1;
+                rivalPokemon.addEnergy(1);
                 System.out.println("Your rival attatched an energy!");
             } else if (rivalChoice == 2) { //attack
                 int damage = 0;
-                damage = rivalPokemon.useAttack(rivalPokemon.energy, false, scan, random);
-                playerPokemon.health -= damage;
+                damage = rivalPokemon.useAttack(rivalPokemon.getEnergy(), false, scan, random);
+                playerPokemon.modifyHealth(true, damage);
             } else if (rivalChoice == 3) { //item
                 boolean itemUsed = false;
                 while (!itemUsed) {
                     int rivalItemChoice = random.nextInt(2) + 1;
                     if (rivalItemChoice == 1) {
-                        if (rivalPokemon.health >= rivalMaxHealth) {
+                        if (rivalPokemon.getHealth() >= rivalMaxHealth) {
                             continue;
                         }
                         //System.out.println("Rival used a potion!");
-                        double modifier = 0;
-                        modifier = rivalItemPotion.useItem(scan, random);
-                        rivalPokemon.health += modifier;
-                        System.out.println("Your rival's " + rivalPokemon.getName() + " has " + rivalPokemon.health + " health");
+                        int heal = rivalItemPotion.useItem(scan, random);
+                        rivalPokemon.modifyHealth(false, heal);
+                        System.out.println("Your rival's " + rivalPokemon.getName() + " has " + rivalPokemon.getHealth() + " health");
                         itemUsed = true;
                     } else {
                         //System.out.println("Rival used the Pokeflute!");
-                        double modifier = 0;
-                        modifier = rivalItemFlute.useItem(scan, random);
+                        //double modifier = 0;
+                        //modifier = rivalItemFlute.useItem(scan, random);
                         //add disrupt code to here and item
                         itemUsed = true;
                 }
@@ -147,10 +147,10 @@ public class Main {
         }
 
         // end of battle
-        if (rivalPokemon.health <= 0) {
+        if (rivalPokemon.getHealth() <= 0) {
             System.out.println("Your rival's " + rivalPokemon.getName() + " fainted!"); 
             System.out.println("You defeated your rival!");
-        } else if (playerPokemon.health <= 0) {
+        } else if (playerPokemon.getHealth() <= 0) {
             System.out.println("Your " + playerPokemon.getName() + " fainted!"); 
             System.out.println("Your rival defeated you!");
         }
